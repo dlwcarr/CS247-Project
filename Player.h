@@ -1,5 +1,5 @@
 #include <vector>
-
+#include "Command.h"
 #include "Card.h"
 
 class Player {
@@ -11,6 +11,7 @@ public:
 	void updateHand(std::vector<Card*>&);
 	void tallyScore();
 	int getScore() const;
+	Command getCommand() const;
 private:
 
 protected:
