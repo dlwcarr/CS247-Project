@@ -18,6 +18,8 @@ public:
 
 private:
 	void shuffleDeck();				// Shuffles the deck
+	void printDeck();
+	void buildDeck();
 
 	// Data members
 	std::vector<Player*> *players_;	// Players
