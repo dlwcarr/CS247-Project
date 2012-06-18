@@ -18,7 +18,7 @@ Player::~Player() {
 	delete discards_;
 }
 
-void Player::discard(Card card) {
+void Player::discard(Card& card) {
 	for (int i = 0; i < hand_->size(); i++) {
 		
 		// Look for card in hand_
@@ -35,6 +35,10 @@ void Player::discard(Card card) {
 			return;
 		}
 	}
+}
+
+void Player::insertHand(Card& card) {
+	hand_->push_back(new Card(card.getSuit(), card.getRank()));
 }
 
 void Player::updateHand(vector<Card*>& cards) {

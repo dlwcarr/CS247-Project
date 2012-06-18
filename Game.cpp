@@ -40,7 +40,19 @@ void Game::start() {
 		this->buildDeck();
 		this->shuffleDeck();
 
+		// Distribute cards
+		int startingPlayer = 0;
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 13; j++) {
+				if (deck_[j + (13*i)]->getSuit() == SPADE && deck_[j + (13*i)]->getRank() == SEVEN)
+					startingPlayer = j;
+				players_[i]->insertHand(deck_[j + (13*i)]);
+			}
+		}
 
+		while(true) {
+			
+		}
 	}
 }
 

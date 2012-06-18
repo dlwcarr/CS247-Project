@@ -6,9 +6,10 @@ class Player {
 public:
 	Player();
 	~Player();
-	virtual void play() = 0;
+	virtual void play(Command) = 0;
 	virtual Command getCommand() const = 0;
-	void discard(Card);
+	void discard(Card&);
+	void insertHand(Card&);
 	void updateHand(std::vector<Card*>&);
 	void tallyScore();
 	int getScore() const;
