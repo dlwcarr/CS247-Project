@@ -14,9 +14,9 @@ public:
 	void tallyScore();
 	int getScore() const;
 private:
-
-protected:
 	std::vector<Card*> *hand_;
 	std::vector<Card*> *discards_;
 	int score_;
+protected:
+	
 }
