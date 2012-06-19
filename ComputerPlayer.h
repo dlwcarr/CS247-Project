@@ -1,5 +1,4 @@
 #include <vector>
-#include "ComputerPlayer.h"
 
 using namespace std;
 
