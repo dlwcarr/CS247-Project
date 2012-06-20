@@ -7,7 +7,7 @@ public:
 	Player();
 	~Player();
 	virtual void play(Command) = 0;
-	virtual Command getCommand() const = 0;
+	virtual Command getCommand(std::vector<Card*>&) const = 0;
 	void discard(Card&);
 	void insertHand(Card&);
 	void updateHand(std::vector<Card*>&);
