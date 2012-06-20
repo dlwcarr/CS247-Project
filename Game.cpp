@@ -77,6 +77,8 @@ void Game::start() {
 			vector<Card> validPlays;
 			validPlays.push_back(Card(SPADE, SEVEN));
 
+            if(human[index])
+					printTable();
 			// Get command from first player
 			Command cmd = players_[startingPlayer]->getCommand(validPlays);
 
