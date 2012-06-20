@@ -23,11 +23,11 @@ Command ComputerPlayer::getCommand(vector<Card>& cards) const {
 
 }
 
+// right here, nigga. dis da problem yo
 void ComputerPlayer::play(Command cmd) {
-	Card card = getFirstCard();
 	if( cmd.type == PLAY ) {
-		removeHand(card);
+		removeHand(cmd.card);
 	} else {
-		discard(card);
+		discard(cmd.card);
 	}
 }

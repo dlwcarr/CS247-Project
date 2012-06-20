@@ -2,7 +2,6 @@
 #define _PLAYER_
 
 #include <vector>
-#include <map>
 #include "Command.h"
 #include "Card.h"
 
@@ -29,7 +28,7 @@ protected:
 	void printDeck() const;
 
 private:
-	std::map<std::string, Card> hand_;
+	std::vector<Card> hand_;
 	std::vector<Card> discards_;
 	int score_;	
 };

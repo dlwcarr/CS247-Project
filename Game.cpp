@@ -18,9 +18,8 @@ Game::Game() {
 	// Initialize players
 	for (int i = 1; i < 5; i++) {
 		string input;
-		cout << "Is player " << i << " a human(h) or computer(c)?" << endl << ">";
+		cout << "Is player " << i << " a human(h) or a computer(c)?" << endl << ">";
 		cin >> input;
-		cout << endl;
 		assert(input == "h" || input == "H" || input == "c" || input == "C");
 		
 		if (input == "h" || input == "H") {
@@ -40,9 +39,10 @@ Game::~Game() {
 
 void Game::start() {
 	// Main game loop
+	buildDeck();
 	while (true) {
-		this->buildDeck();
-		this->shuffleDeck();
+		clearTable();
+		shuffleDeck();
 		// Give each player a pointer to the deck for DECK command
 		for (int i = 0; i < 4; i++) {
 			players_[i]->deck = &deck_; 
@@ -79,7 +79,7 @@ void Game::start() {
 				}
 			}
 			else {
-				cout << "Player " << (startingPlayer + 1) << " plays 7S." << endl;
+				cout << "Player " << (startingPlayer + 1) << " plays " << cmd.card << "." << endl;
 				players_[startingPlayer]->play(cmd);
 				putOnTable(cmd.card);
 				break;
@@ -120,11 +120,11 @@ void Game::start() {
 				}
 				else {
 					if (cmd.type == PLAY) {
-						cout << "Player " << (index + 1) << " plays " << cmd.card << endl;
+						cout << "Player " << (index + 1) << " plays " << cmd.card << "." << endl;
 						putOnTable(cmd.card);
 					}
 					else if (cmd.type == DISCARD) {
-						cout << "Player " << (index + 1) << " discards " << cmd.card << endl;	
+						cout << "Player " << (index + 1) << " discards " << cmd.card << "." << endl;	
 					}
 					curPlayer->play(cmd);
 				}
@@ -133,9 +133,9 @@ void Game::start() {
 
 		}
 		for( int i = 0; i < 4; i++) {
-				cout << "Player" << i << "\'s discards:";
+				cout << "Player " << (i + 1) << "\'s discards: ";
 				players_[i]->printDiscards();
-				cout << "Player" << i << "\'s score:";
+				cout << "Player " << (i + 1) << "\'s score:";
 				players_[i]->tallyScore();
 			}
 		if(players_[0]->getScore() >= 80 || players_[1]->getScore() >= 80 || players_[2]->getScore() >= 80 || players_[3]->getScore() >= 80) {
@@ -145,7 +145,7 @@ void Game::start() {
 					winner = i;
 				}
 			}
-			cout << "Player " << winner << " wins!";
+			cout << "Player " << (winner + 1) << " wins!" << endl;
 			return;
 		}
 
@@ -166,7 +166,7 @@ void Game::shuffleDeck() {
 
 	int n = CARD_COUNT;
 
-	while (n > 1) {
+	while ( n > 1 ) {
 		int k = (int) (lrand48() % n);
 		--n;
 		Card c = deck_[n];
@@ -191,39 +191,45 @@ vector<Card> Game::validPlays(const vector<Card>& hand) const {
 	vector<Card> allValidPlays;
 	
 	if (!table_.hearts.empty()) {
-		if (table_.hearts.back().getRank() > 0)
-			allValidPlays.push_back(Card(table_.hearts.back().getSuit(), Rank(table_.hearts.back().getRank() + 1)));
-		if (table_.hearts.front().getRank() < 12)
-			allValidPlays.push_back(Card(table_.hearts.front().getSuit(), Rank(table_.hearts.front().getRank() + 1)));
+		if (table_.hearts.back().getRank() < 12)
+			allValidPlays.push_back(Card(HEART, Rank(table_.hearts.back().getRank() + 1)));
+		if (table_.hearts.front().getRank() > 0)
+			allValidPlays.push_back(Card(HEART, Rank(table_.hearts.front().getRank() - 1)));
 	}
 	else 
 		allValidPlays.push_back(Card(HEART, SEVEN));
 
 	if (!table_.diamonds.empty()) {
-		allValidPlays.push_back(Card(table_.diamonds.back().getSuit(), table_.diamonds.back().getRank()));
-		allValidPlays.push_back(Card(table_.diamonds.front().getSuit(), table_.diamonds.front().getRank()));
+		if (table_.diamonds.back().getRank() < 12)
+			allValidPlays.push_back(Card(DIAMOND, Rank(table_.diamonds.back().getRank() + 1)));
+		if (table_.diamonds.front().getRank() > 0)
+			allValidPlays.push_back(Card(DIAMOND, Rank(table_.diamonds.front().getRank() - 1)));
 	}
 	else 
 		allValidPlays.push_back(Card(DIAMOND, SEVEN));
 
 	if (!table_.spades.empty()) {
-		allValidPlays.push_back(Card(table_.spades.back().getSuit(), table_.spades.back().getRank()));
-		allValidPlays.push_back(Card(table_.spades.front().getSuit(), table_.spades.front().getRank()));
+		if (table_.spades.back().getRank() < 12)
+			allValidPlays.push_back(Card(SPADE, Rank(table_.spades.back().getRank() + 1)));
+		if (table_.spades.front().getRank() > 0)
+			allValidPlays.push_back(Card(SPADE, Rank(table_.spades.front().getRank() - 1)));
 	}
 
 	if (!table_.clubs.empty()) {
-		allValidPlays.push_back(Card(table_.clubs.back().getSuit(), table_.clubs.back().getRank()));
-		allValidPlays.push_back(Card(table_.clubs.front().getSuit(), table_.clubs.front().getRank()));
+		if (table_.clubs.back().getRank() < 12)
+			allValidPlays.push_back(Card(CLUB, Rank(table_.clubs.back().getRank() + 1)));
+		if (table_.clubs.front().getRank() > 0)
+			allValidPlays.push_back(Card(CLUB, Rank(table_.clubs.front().getRank() - 1)));
 	}
 	else
 		allValidPlays.push_back(Card(CLUB, SEVEN));
 
 	vector<Card> validHand;
 
-	for (int i = 0; i < allValidPlays.size(); i++) {
-		for (int j = 0; j < hand.size(); j++) {
-			if (allValidPlays[i] == hand[j])
-				validHand.push_back(Card(allValidPlays[i].getSuit(), allValidPlays[i].getRank()));
+	for (int i = 0; i < hand.size(); i++) {
+		for (int j = 0; j < allValidPlays.size(); j++) {
+			if (allValidPlays[j] == hand[i])
+				validHand.push_back(Card(hand[i].getSuit(), hand[i].getRank()));
 		}
 	}
 
@@ -235,25 +241,25 @@ void Game::printTable() const {
 	
 	cout << "Clubs:";
 	for (deque<Card>::const_iterator it = table_.clubs.begin(); it != table_.clubs.end(); it++) {
-		cout << " " << *it;
+		cout << " " << (it->getRank() + 1);
 	}
 	cout << endl;
 	
 	cout << "Diamonds:";
 	for (deque<Card>::const_iterator it = table_.diamonds.begin(); it != table_.diamonds.end(); it++) {
-		cout << " " << *it;
+		cout << " " << (it->getRank() + 1);
 	}
 	cout << endl;
 	
 	cout << "Hearts:";
 	for (deque<Card>::const_iterator it = table_.hearts.begin(); it != table_.hearts.end(); it++) {
-		cout << " " << *it;
+		cout << " " << (it->getRank() + 1);
 	}
 	cout << endl;
 
 	cout << "Spades:";
 	for (deque<Card>::const_iterator it = table_.spades.begin(); it != table_.spades.end(); it++) {
-		cout << " " << *it;
+		cout << " " << (it->getRank() + 1);
 	}
 	cout << endl;
 }
@@ -327,6 +333,13 @@ void Game::putOnTable(Card card) {
 				table_.spades.push_front(card);
 		}
 	}
+}
+
+void Game::clearTable() {
+	table_.clubs.clear();
+	table_.diamonds.clear();
+	table_.hearts.clear();
+	table_.spades.clear();
 }
 
 // Non-member functions

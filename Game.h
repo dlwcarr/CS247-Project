@@ -25,6 +25,7 @@ private:
 	void buildDeck();
 	std::vector<Card> validPlays(const std::vector<Card>&) const;
 	void putOnTable(Card);
+	void clearTable();
 
 	// Data members
 	bool human[4];

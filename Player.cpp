@@ -19,18 +19,21 @@ Player::~Player() {
 }
 
 void Player::discard(Card card) {
-	if (hand_.find(cardToString(card)) != hand_.end()) {					// ensure card is in hand_
-		hand_.erase(hand_.find(cardToString(card)));					// Remove card from hand_
-		discards_.push_back(Card(card.getSuit(), card.getRank()));	// Add card to discards_
+	for (vector<Card>::iterator it = hand_.begin(); it != hand_.end(); it++) {
+		if (*it == card) {
+			discards_.push_back(*it);
+			hand_.erase(it);
+			return;
+		}
 	}
 }
 
 void Player::insertHand(Card card) {
-	hand_.insert(pair<string, Card>(cardToString(card), Card(card.getSuit(), card.getRank())));
+	hand_.push_back(card);
 }
 
 void Player::insertDiscard(Card card) {
-	discards_.push_back(Card(card.getSuit(), card.getRank()));
+	discards_.push_back(card);
 }
 
 void Player::updateHand(vector<Card>& cards) {
@@ -39,13 +42,17 @@ void Player::updateHand(vector<Card>& cards) {
 
 	// Fill hand_ with cards
 	for (int i = 0; i < cards.size(); i++) {
-		hand_.insert(pair<string, Card>(cardToString(cards[i]), Card(cards[i].getSuit(), cards[i].getRank())));
+		hand_.push_back(cards[i]);
 	}
 }
 
 void Player::removeHand(Card card) {
-	if (hand_.find(cardToString(card)) != hand_.end())
-		hand_.erase(hand_.find(cardToString(card)));
+	for (vector<Card>::iterator it = hand_.begin(); it != hand_.end(); it++) {
+		if (*it == card) {
+			hand_.erase(it);
+			return;
+		}
+	}
 }
 
 void Player::tallyScore() {
@@ -62,15 +69,11 @@ int Player::getScore() const {
 }
 
 Card Player::getFirstCard() const {
-	map<string, Card>::const_iterator it = hand_.begin();
-	return Card(it->second.getSuit(), it->second.getRank());
+	return hand_.front();
 }
 
 vector<Card> Player::getHand() const {
-	vector<Card> c;
-	for (map<string, Card>::const_iterator it = hand_.begin(); it != hand_.end(); it++)
-		c.push_back(Card(it->second.getSuit(), it->second.getRank()));
-	return c;
+	return hand_;
 }
 
 vector<Card> Player::getDiscards() const {
@@ -98,8 +101,11 @@ void Player::printDeck() const {
 }
 
 void Player::printDiscards() const {
-	for (int i = 0; i < discards_.size(); i++) 
-		cout << " " << discards_[i];
+	for (int i = 0; i < discards_.size(); i++) {
+		cout << discards_[i];
+		if (i != (discards_.size() - 1))
+			cout << " ";
+	}
 	cout << endl;
 
 }
