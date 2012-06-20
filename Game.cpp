@@ -305,7 +305,10 @@ void Game::printTable() const {
 	cout << "Clubs:";
 	for (deque<Card>::const_iterator it = table_.clubs.begin(); it != table_.clubs.end(); it++) {
         int rank = it->getRank() + 1;
-        if ( rank == 11) {
+        if ( rank == 1){
+        	cout << " " << "A";
+        }
+        else if ( rank == 11) {
             cout << " " << "J";
         } else if ( rank == 12) {
             cout << " " << "Q";
@@ -323,7 +326,10 @@ void Game::printTable() const {
 	cout << "Diamonds:";
 	for (deque<Card>::const_iterator it = table_.diamonds.begin(); it != table_.diamonds.end(); it++) {
 		int rank = it->getRank() + 1;
-        if ( rank == 11) {
+        if ( rank == 1){
+        	cout << " " << "A";
+        }
+        else if ( rank == 11) {
             cout << " " << "J";
         } else if ( rank == 12) {
             cout << " " << "Q";
@@ -340,7 +346,10 @@ void Game::printTable() const {
 	cout << "Hearts:";
 	for (deque<Card>::const_iterator it = table_.hearts.begin(); it != table_.hearts.end(); it++) {
 		int rank = it->getRank() + 1;
-        if ( rank == 11) {
+        if ( rank == 1){
+        	cout << " " << "A";
+        }
+        else if ( rank == 11) {
             cout << " " << "J";
         } else if ( rank == 12) {
             cout << " " << "Q";
@@ -357,7 +366,10 @@ void Game::printTable() const {
 	cout << "Spades:";
 	for (deque<Card>::const_iterator it = table_.spades.begin(); it != table_.spades.end(); it++) {
 		int rank = it->getRank() + 1;
-        if ( rank == 11) {
+        if ( rank == 1){
+        	cout << " " << "A";
+        }
+        else if ( rank == 11) {
             cout << " " << "J";
         } else if ( rank == 12) {
             cout << " " << "Q";
