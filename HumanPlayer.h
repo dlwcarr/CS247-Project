@@ -1,3 +1,6 @@
+#ifndef _HUMAN_
+#define _HUMAN_
+
 #include <vector>
 #include "Player.h"
 #include "Command.h"
@@ -11,3 +14,5 @@ public:
 private:
 	
 };
+
+#endif
