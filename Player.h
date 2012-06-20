@@ -18,6 +18,7 @@ public:
 	void removeHand(Card);
 	void tallyScore();
 	int getScore() const;
+	void setScore(int);
 	Card getFirstCard() const;
 	std::vector<Card> getHand() const;
 	std::vector<Card> getDiscards() const;

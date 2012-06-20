@@ -22,13 +22,13 @@ public:
 
 private:
 	void shuffleDeck();				// Shuffles the deck
-	void buildDeck();
-	std::vector<Card> validPlays(const std::vector<Card>&) const;
-	void putOnTable(Card);
-	void clearTable();
+	void buildDeck();				// Creates a deck in order
+	std::vector<Card> validPlays(const std::vector<Card>&) const; // Finds valid plays in parameter vector based on whats on the table
+	void putOnTable(Card);			// Add a card to the table
+	void clearTable();				// Clear cards from table
 
 	// Data members
-	bool human[4];
+	bool human[4];					// Check if a player is human or not
 	std::vector<Player*> players_;	// Players
 	std::vector<Card> deck_;		// Deck of cards
 	Table table_;					// Cards that have been played

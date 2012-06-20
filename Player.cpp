@@ -64,6 +64,10 @@ void Player::tallyScore() {
 	discards_.clear();
 }
 
+void Player::setScore(int score) {
+	score_ = score;
+}
+
 int Player::getScore() const {
 	return score_;
 }

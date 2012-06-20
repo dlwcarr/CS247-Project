@@ -8,8 +8,8 @@ class ComputerPlayer : public Player {
 public:
 	ComputerPlayer();
 	~ComputerPlayer();
-	void play(Command);
-	Command getCommand(std::vector<Card>&) const;
+	void play(Command);								// Handles card manipulation necessary to make a play
+	Command getCommand(std::vector<Card>&) const; 	// Takes a vector of valid plays and chooses one to play
 };
 
 #endif
