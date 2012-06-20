@@ -20,6 +20,8 @@ public:
 	std::vector<Card*>& getHand() const;
 	std::vector<Card*>& getDiscards() const;
 	std::vector<Card*> *deck;
+	void printDiscards() const;
+
 private:
 	void printDeck();
 	std::map<std::string, Card*> *hand_;
