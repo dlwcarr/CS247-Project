@@ -1,6 +1,8 @@
 #include <string>
 #include <iostream>
 #include <assert.h>
+#include <vector>
+#include <deque>
 #include "Game.h"
 #include "Command.h"
 #include "ComputerPlayer.h"
@@ -15,6 +17,8 @@ const int CARD_COUNT = 52;
 Game::Game() {
 
 	// Initialize players
+	players_ = new vector<Player*>(4);
+
 	for (int i = 1; i < 5; i++) {
 		string input;
 		cout << "Is player " << i << " a human(h) or computer(c)?" << endl << ">";
@@ -23,10 +27,19 @@ Game::Game() {
 		assert(input.c_str() == 'h' || input.c_str() == 'H' || input.c_str() == 'c' || input.c_str() == 'C');
 		
 		if (input.c_str() == 'h' || input.c_str() == 'H')
-			players_[i] = new HumanPlayer();
+			players_[i-1] = new HumanPlayer();
 		else
-			players_[i] = new ComputerPlayer();
+			players_[i-1] = new ComputerPlayer();
 	}
+
+	// Initialize Table
+	table_ = new Table;
+	table_->diamonds = new deque<Card*>;
+	table_->clubs = new deque<Card*>;
+	table_->hearts = new deque<Card*>;
+	table_->spades = new deque<Card*>;
+
+	deck_ = new vector<Card*>;
 	
 }
 
@@ -50,8 +63,20 @@ void Game::start() {
 			}
 		}
 
+		// Take turns
+		plays = new vector<Card*>;
+		plays.push_back(Card(3, 6));
+		Command cmd = players[startingPlayer]->getCommand(plays);
+		//check command
+
 		while(true) {
-			
+			for( int i = 0; i < 4; i++) {
+				Player* curPlayer = players_[startingPlayer + i % 4];
+				vector<Card*> plays = validPlays(curPlayer->getHand());
+				Command cmd = curPlayer->getCommand(plays);
+			}
+
+			players
 		}
 	}
 }

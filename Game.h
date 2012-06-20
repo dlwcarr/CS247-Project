@@ -20,6 +20,7 @@ private:
 	void shuffleDeck();				// Shuffles the deck
 	void printDeck();
 	void buildDeck();
+	std::vector<Card*>& validPlays(const std::vector<Card*>&) const;
 
 	// Data members
 	std::vector<Player*> *players_;	// Players
