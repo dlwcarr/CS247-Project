@@ -34,10 +34,13 @@ Command HumanPlayer::getCommand(vector<Card*>& legalPlays) const {
 					return cmd;
 			}
 		}
+		else if(cmd.type == DECK) {
+			printDeck();
+		}
 		else 
 			return cmd;
- 
-		cout << "This is not a legal play." << endl;
+ 		if(cmd.type != DECK)
+ 			cout << "This is not a legal play." << endl;
 	}
 }
 

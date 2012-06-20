@@ -52,6 +52,10 @@ void Game::start() {
 	while (true) {
 		this->buildDeck();
 		this->shuffleDeck();
+		// Give each player a pointer to the deck for DECK command
+		for (int i = 0; i < 4; i++) {
+			players_[i]->deck = deck_; 
+		}
 
 		// Distribute cards
 		int startingPlayer = 0;
@@ -63,28 +67,37 @@ void Game::start() {
 			}
 		}
 
+		cout << "A new round begins. It's player " << startingPlayer << "\'s turn to play." << endl;
+
 		// Take turns
 		// First player first turn
 		bool firstTurn = true;
 		while(true) {
 			plays = new vector<Card*>;
 			plays.push_back(Card(3, 6));
-			Command cmd = players[startingPlayer]->getCommand(plays);
+			Command cmd = players_[startingPlayer]->getCommand(plays);
 			if (cmd.type == QUIT ) {
 				return;
 			}
 			else if (cmd.type == RAGEQUIT) {
-				//do shit nigguh
+				vector<Card*> curHand = players_[startingPlayer]->getHand();
+				delete players_[startingPlayer];
+				players_[i] = new ComputerPlayer();
+				for( int c = 0; c < curHand.size(); c++) {
+					players_[startingPlayer]->insertHand(curHand[c]);
+				}
 			}
-			else if (cmd.type == DECK) {
-				//do shit nigguh
+			else {
+				players_[startingPlayer]->play(cmd);
+				break;
 			}
-			players[startingPlayer]->play(cmd);
+			
 		}
 		
 		//Rest of the turns
-		while(true) {
-			for( int i = 0; i < 4; i++) {
+		int j = 1;
+		while(j < 52) {
+			for( int i = 0; i < 4; i++, j++) {
 				if firstTurn {
 					i++;
 					firstTurn = false;
@@ -93,17 +106,47 @@ void Game::start() {
 				vector<Card*> plays = validPlays(curPlayer->getHand());
 				Command cmd = curPlayer->getCommand(plays);
 				if (cmd.type == QUIT ) {
-				return;
+					return;
 				}
 				else if (cmd.type == RAGEQUIT) {
-					//do shit nigguh
+					vector<Card*> curHand = curPlayer->getHand();
+					vector<Card*> curDiscards = curPlayer->getDiscards();
+					delete players_[i];
+					players_[i] = new ComputerPlayer();
+					for( int c = 0; c < curHand.size(); c++) {
+						players_[i]->insertHand(curHand[c]);
+					}
+					for( int c = 0; c < curDiscards.size(); c++) {
+						players_[i]->insertDiscard(curHand[c]);
+					}
+					i--;
+					j--;
 				}
-				else if (cmd.type == DECK) {
-					//do shit nigguh
+				else {
+					curPlayer->play(cmd);
 				}
-				curPlayer->play(cmd);
+				
 			}
+
 		}
+		for( int i = 0; i < 4; i++) {
+				cout << "Player" << i << "\'s discards:";
+				players_[i]->printDiscards();
+				cout << "Player" << i << "\'s score:";
+				players_[i]->tallyScore();
+			}
+		if(players_[0]->getScore() >= 80 || players_[1]->getScore() >= 80 || players_[2]->getScore() >= 80 || players_[3]->getScore() >= 80) {
+			int winner = 0;
+			for( int i = 1; i < 4; i++) {
+				if( players_[i]->getScore() < players_[winner]->getScore() ) {
+					winner = i;
+				}
+			}
+			cout << "Player " << winner << " wins!"
+			return;
+		}
+
+		
 	}
 }
 
@@ -129,20 +172,6 @@ void Game::shuffleDeck() {
 	}
 }
 
-void Game::printDeck() {
-	// Print deck_ out in 4 lines of 13 cards
-	if (deck_->size() == 52) {
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 13; j++) {
-				cout << deck_[j + (13*i)];
-				if (j != 12) {
-					cout << " ";
-				}
-			}
-			cout << endl;
-		}
-	}
-}
 
 void Game::buildDeck() {
 	deck_->clear();

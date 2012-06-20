@@ -18,7 +18,6 @@ public:
 
 private:
 	void shuffleDeck();				// Shuffles the deck
-	void printDeck();
 	void buildDeck();
 	std::vector<Card*>& validPlays(const std::vector<Card*>&) const;
 
