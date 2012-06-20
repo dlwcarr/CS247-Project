@@ -3,41 +3,42 @@
 
 using namespace std;
 
-HumanPlayer::HumanPlayer() {
-	
-}
+HumanPlayer::HumanPlayer() : Player::Player() {}
 
-HumanPlayer::~HumanPlayer() {
-
-}
+HumanPlayer::~HumanPlayer() {}
 
 Command HumanPlayer::getCommand(vector<Card*>& legalPlays) const {
+	// Output player's hand
 	vector<Card*> hand = getHand();
 	cout << "Your hand:";
 	for (int i = 0; i < hand.size(); i++)
 		cout << " " << hand[i];
+
+	// Output legal plays available to player
 	cout << endl << "Legal plays:";
 	for (int i = 0; i < legalPlays.size(); i++)
 		cout << " " << legalPlays[i];
 	cout << endl;
 
+	// Read in command
 	Command cmd;
-	bool flag = true;
 
-	while (flag) {
+	while (true) {
 		cout << ">";
 		cin >> cmd;
+
+		// Ensure play is legal
 		if (cmd.type == PLAY) {
 			for (int i = 0; i < legalPlays->size(); i++) {
 				if (cmd.card == *legalPlays[i])
-					flag = false;
+					return cmd;
 			}
 		}
 		else 
-			flag = false;
+			return cmd;
+ 
+		cout << "This is not a legal play." << endl;
 	}
-
-	return cmd;
 }
 
 void HumanPlayer::play(Command c) {

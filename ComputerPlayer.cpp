@@ -3,7 +3,9 @@
 
 using namespace std;
 
-ComputerPlayer::ComputerPlayer() : Player::Player(accountNo) {}
+ComputerPlayer::ComputerPlayer() : Player::Player() {}
+
+ComputerPlayer::~ComputerPlayer() {}
 
 Command ComputerPlayer::getCommand(vector<Card*>& cards) {
 	
