@@ -1,4 +1,4 @@
-CXX = clang++ 			
+CXX = g++ 			
 CXXFLAGS = -g -Wall -MMD
 OBJECTS = Card.o Command.o Game.o ComputerPlayer.o HumanPlayer.o Player.o straights.o
 DEPENDS = ${OBJECTS:.o=.d}
