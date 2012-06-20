@@ -156,8 +156,49 @@ void Game::buildDeck() {
 	}
 }
 
-vector<Card*>& validPlays(const vector<Card*>& hand){
-	//Do shit nigguh
-};
+vector<Card*>& Game::validPlays(const vector<Card*>& hand) const {
+	vector<Card*> validPlays;
+	
+	if (!table_->hearts->empty()) {
+		if (table_->hearts->size() > 1)
+			validPlays.push_back(new Card(table_->hearts->back()->getSuit(), table_->hearts->back()->getRank()));
+		validPlays.push_back(new Card(table_->hearts->front()->getSuit(), table_->hearts->front()->getRank()));
+	}
+	else 
+		validPlays.push_back(new Card(HEART, SEVEN));
+
+	if (!table_->diamonds->empty()) {
+		if (table_->diamonds->size() > 1)
+			validPlays.push_back(new Card(table_->diamonds->back()->getSuit(), table_->diamonds->back()->getRank()));
+		validPlays.push_back(new Card(table_->diamonds->front()->getSuit(), table_->diamonds->front()->getRank()));
+	}
+	else 
+		validPlays.push_back(new Card(DIAMOND, SEVEN));
+
+	if (!table_->spades->empty()) {
+		if (table_->spades->size() > 1)
+			validPlays.push_back(new Card(table_->spades->back()->getSuit(), table_->spades->back()->getRank()));
+		validPlays.push_back(new Card(table_->spades->front()->getSuit(), table_->spades->front()->getRank()));
+	}
+
+	if (!table_->clubs->empty()) {
+		if (table_->clubs->size() > 1)
+			validPlays.push_back(new Card(table_->clubs->back()->getSuit(), table_->clubs->back()->getRank()));
+		validPlays.push_back(new Card(table_->clubs->front()->getSuit(), table_->clubs->front()->getRank()));
+	}
+	else
+		validPlays.push_back(new Card(CLUB, SEVEN));
+
+	vector<Card*> validHand;
+
+	for (int i = 0; i < validPlays.size(); i++) {
+		for (int j = 0; j < hand.size(); j++) {
+			if (*validPlays[i] == *hand[j])
+				validHand.push_back(new Card(validPlays[i]->getSuit(), validPlays[i]->getRank()));
+		}
+	}
+
+	return validHand;
+}
 
 // Non-member functions
