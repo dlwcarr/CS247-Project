@@ -15,7 +15,7 @@ Command HumanPlayer::getCommand(vector<Card>& legalPlays) const {
 		cout << " " << hand[i];
 
 	// Output legal plays available to player
-	cout << endl << "Legal plays:";
+	cout << endl << "Legal Plays:";
 	for (int i = 0; i < legalPlays.size(); i++)
 		cout << " " << legalPlays[i];
 	cout << endl;
@@ -44,7 +44,7 @@ Command HumanPlayer::getCommand(vector<Card>& legalPlays) const {
                 return cmd;
 		}else
 			return cmd;
- 		if(cmd.type != DECK)
+ 		if(cmd.type != DECK && cmd.type != DISCARD)
  			cout << "This is not a legal play." << endl;
 	}
 }

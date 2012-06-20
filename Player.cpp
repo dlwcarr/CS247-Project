@@ -94,10 +94,7 @@ void Player::printDeck() const {
 	if (deck->size() == 52) {
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 13; j++) {
-				cout << (*deck)[j + (13*i)];
-				if (j != 12) {
-					cout << " ";
-				}
+				cout << (*deck)[j + (13*i)] << " ";
 			}
 			cout << endl;
 		}
