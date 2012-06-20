@@ -54,10 +54,6 @@ int Player::getScore() const {
 	return score_;
 }
 
-void Player::printHand() const {
-
-}
-
 Card Player::getFirstCard() const {
 	map<string, Card*>::iterator it = hand_->begin();
 	return Card(it->getSuit(), it->getRank());
