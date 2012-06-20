@@ -64,19 +64,45 @@ void Game::start() {
 		}
 
 		// Take turns
-		plays = new vector<Card*>;
-		plays.push_back(Card(3, 6));
-		Command cmd = players[startingPlayer]->getCommand(plays);
-		//check command
-
+		// First player first turn
+		bool firstTurn = true;
+		while(true) {
+			plays = new vector<Card*>;
+			plays.push_back(Card(3, 6));
+			Command cmd = players[startingPlayer]->getCommand(plays);
+			if (cmd.type == QUIT ) {
+				return;
+			}
+			else if (cmd.type == RAGEQUIT) {
+				//do shit nigguh
+			}
+			else if (cmd.type == DECK) {
+				//do shit nigguh
+			}
+			players[startingPlayer]->play(cmd);
+		}
+		
+		//Rest of the turns
 		while(true) {
 			for( int i = 0; i < 4; i++) {
+				if firstTurn {
+					i++;
+					firstTurn = false;
+				}
 				Player* curPlayer = players_[startingPlayer + i % 4];
 				vector<Card*> plays = validPlays(curPlayer->getHand());
 				Command cmd = curPlayer->getCommand(plays);
+				if (cmd.type == QUIT ) {
+				return;
+				}
+				else if (cmd.type == RAGEQUIT) {
+					//do shit nigguh
+				}
+				else if (cmd.type == DECK) {
+					//do shit nigguh
+				}
+				curPlayer->play(cmd);
 			}
-
-			players
 		}
 	}
 }
@@ -129,5 +155,9 @@ void Game::buildDeck() {
 		}
 	}
 }
+
+vector<Card*>& validPlays(const vector<Card*>& hand){
+	//Do shit nigguh
+};
 
 // Non-member functions

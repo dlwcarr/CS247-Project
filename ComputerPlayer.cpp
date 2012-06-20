@@ -10,11 +10,10 @@ Command ComputerPlayer::getCommand(vector<Card*>& cards) {
 	command = Command();
 
 	if (cards.size()) {
-		Command.card = getFirstCard();
-		Command.type = "play";
+		Command.card = Card(cards[0]->getSuit(), cards[0]->getRank());
+		Command.type = PLAY;
 	} else {
-		card = getFirstCard();
-		Command.card = card;
+		Command.card = getFirstCard();
 		Command.type = discard;
 	}
 
@@ -22,7 +21,7 @@ Command ComputerPlayer::getCommand(vector<Card*>& cards) {
 
 void ComputerPlayer::play(Command) {
 	card = getFirstCard();
-	if( Command.type = "play" ) {
+	if( Command.type == PLAY ) {
 		removeHand(card);
 	} else {
 		discard(card);
