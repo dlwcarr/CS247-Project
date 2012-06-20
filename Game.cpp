@@ -15,32 +15,23 @@ const int CARD_COUNT = 52;
 // Public methods
 
 Game::Game() {
-
 	// Initialize players
-	players_ = new vector<Player*>(4);
-
 	for (int i = 1; i < 5; i++) {
 		string input;
 		cout << "Is player " << i << " a human(h) or computer(c)?" << endl << ">";
 		cin >> input;
 		cout << endl;
-		assert(input.c_str() == "h" || input.c_str() == "H" || input.c_str() == "c" || input.c_str() == "C");
+		assert(input == "h" || input == "H" || input == "c" || input == "C");
 		
-		if (input.c_str() == 'h' || input.c_str() == 'H')
-			players_[i-1] = new HumanPlayer();
-		else
-			players_[i-1] = new ComputerPlayer();
+		if (input == "h" || input == "H") {
+			players_.push_back(new HumanPlayer());
+			human[i-1] = true;
+		}
+		else {
+			players_.push_back(new ComputerPlayer());
+			human[i-1] = false;
+		}
 	}
-
-	// Initialize Table
-	table_ = new Table;
-	table_->diamonds = new deque<Card*>;
-	table_->clubs = new deque<Card*>;
-	table_->hearts = new deque<Card*>;
-	table_->spades = new deque<Card*>;
-
-	deck_ = new vector<Card*>;
-	
 }
 
 Game::~Game() {
@@ -54,41 +45,43 @@ void Game::start() {
 		this->shuffleDeck();
 		// Give each player a pointer to the deck for DECK command
 		for (int i = 0; i < 4; i++) {
-			players_[i]->deck = deck_; 
+			players_[i]->deck = &deck_; 
 		}
 
 		// Distribute cards
 		int startingPlayer = 0;
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 13; j++) {
-				if (deck_[j + (13*i)]->getSuit() == SPADE && deck_[j + (13*i)]->getRank() == SEVEN)
-					startingPlayer = j;
+				if (deck_[j + (13*i)].getSuit() == SPADE && deck_[j + (13*i)].getRank() == SEVEN)
+					startingPlayer = i;
 				players_[i]->insertHand(deck_[j + (13*i)]);
 			}
 		}
 
-		cout << "A new round begins. It's player " << startingPlayer << "\'s turn to play." << endl;
+		cout << "A new round begins. It's player " << (startingPlayer + 1) << "\'s turn to play." << endl;
 
 		// Take turns
 		// First player first turn
 		bool firstTurn = true;
 		while(true) {
-			plays = new vector<Card*>;
-			plays.push_back(Card(3, 6));
+			vector<Card> plays;
+			plays.push_back(Card(SPADE, SEVEN));
 			Command cmd = players_[startingPlayer]->getCommand(plays);
 			if (cmd.type == QUIT ) {
 				return;
 			}
 			else if (cmd.type == RAGEQUIT) {
-				vector<Card*> curHand = players_[startingPlayer]->getHand();
+				vector<Card> curHand = players_[startingPlayer]->getHand();
 				delete players_[startingPlayer];
-				players_[i] = new ComputerPlayer();
+				players_[startingPlayer] = new ComputerPlayer();
 				for( int c = 0; c < curHand.size(); c++) {
 					players_[startingPlayer]->insertHand(curHand[c]);
 				}
 			}
 			else {
+				cout << "Player " << (startingPlayer + 1) << " plays 7S." << endl;
 				players_[startingPlayer]->play(cmd);
+				putOnTable(cmd.card);
 				break;
 			}
 			
@@ -98,31 +91,41 @@ void Game::start() {
 		int j = 1;
 		while(j < 52) {
 			for( int i = 0; i < 4; i++, j++) {
-				if firstTurn {
+				if (firstTurn) {
 					i++;
 					firstTurn = false;
 				}
-				Player* curPlayer = players_[startingPlayer + i % 4];
-				vector<Card*> plays = validPlays(curPlayer->getHand());
+				int index = (startingPlayer + i) % 4;
+				Player* curPlayer = players_[index];
+				if(human[index])
+					printTable();
+				vector<Card> plays = validPlays(curPlayer->getHand());
 				Command cmd = curPlayer->getCommand(plays);
 				if (cmd.type == QUIT ) {
 					return;
 				}
 				else if (cmd.type == RAGEQUIT) {
-					vector<Card*> curHand = curPlayer->getHand();
-					vector<Card*> curDiscards = curPlayer->getDiscards();
-					delete players_[i];
-					players_[i] = new ComputerPlayer();
+					vector<Card> curHand = curPlayer->getHand();
+					vector<Card> curDiscards = curPlayer->getDiscards();
+					delete players_[index];
+					players_[index] = new ComputerPlayer();
 					for( int c = 0; c < curHand.size(); c++) {
-						players_[i]->insertHand(curHand[c]);
+						players_[index]->insertHand(curHand[c]);
 					}
 					for( int c = 0; c < curDiscards.size(); c++) {
-						players_[i]->insertDiscard(curHand[c]);
+						players_[index]->insertDiscard(curHand[c]);
 					}
 					i--;
 					j--;
 				}
 				else {
+					if (cmd.type == PLAY) {
+						cout << "Player " << (index + 1) << " plays " << cmd.card << endl;
+						putOnTable(cmd.card);
+					}
+					else if (cmd.type == DISCARD) {
+						cout << "Player " << (index + 1) << " discards " << cmd.card << endl;	
+					}
 					curPlayer->play(cmd);
 				}
 				
@@ -142,7 +145,7 @@ void Game::start() {
 					winner = i;
 				}
 			}
-			cout << "Player " << winner << " wins!"
+			cout << "Player " << winner << " wins!";
 			return;
 		}
 
@@ -158,7 +161,7 @@ void Game::shuffleDeck() {
 	the given program, use this shuffling algorithm.
 
 	CARD_COUNT is the constant 52
-	cards_ is an array of pointers to cards
+	cards_ is an array of cards
 	*/
 
 	int n = CARD_COUNT;
@@ -166,7 +169,7 @@ void Game::shuffleDeck() {
 	while (n > 1) {
 		int k = (int) (lrand48() % n);
 		--n;
-		Card *c = deck_[n];
+		Card c = deck_[n];
 		deck_[n] = deck_[k];
 		deck_[k] = c;
 	}
@@ -174,60 +177,156 @@ void Game::shuffleDeck() {
 
 
 void Game::buildDeck() {
-	deck_->clear();
-	Card *temp;
+	deck_.clear();
 
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 13; j++) {
-			temp = new Card(i, j);
-			deck_->push_back(temp);
+			deck_.push_back(Card(Suit(i), Rank(j)));
 		}
 	}
 }
 
-vector<Card*>& Game::validPlays(const vector<Card*>& hand) const {
-	vector<Card*> validPlays;
+vector<Card> Game::validPlays(const vector<Card>& hand) const {
+
+	vector<Card> allValidPlays;
 	
-	if (!table_->hearts->empty()) {
-		if (table_->hearts->size() > 1)
-			validPlays.push_back(new Card(table_->hearts->back()->getSuit(), table_->hearts->back()->getRank()));
-		validPlays.push_back(new Card(table_->hearts->front()->getSuit(), table_->hearts->front()->getRank()));
+	if (!table_.hearts.empty()) {
+		if (table_.hearts.back().getRank() > 0)
+			allValidPlays.push_back(Card(table_.hearts.back().getSuit(), Rank(table_.hearts.back().getRank() + 1)));
+		if (table_.hearts.front().getRank() < 12)
+			allValidPlays.push_back(Card(table_.hearts.front().getSuit(), Rank(table_.hearts.front().getRank() + 1)));
 	}
 	else 
-		validPlays.push_back(new Card(HEART, SEVEN));
+		allValidPlays.push_back(Card(HEART, SEVEN));
 
-	if (!table_->diamonds->empty()) {
-		if (table_->diamonds->size() > 1)
-			validPlays.push_back(new Card(table_->diamonds->back()->getSuit(), table_->diamonds->back()->getRank()));
-		validPlays.push_back(new Card(table_->diamonds->front()->getSuit(), table_->diamonds->front()->getRank()));
+	if (!table_.diamonds.empty()) {
+		allValidPlays.push_back(Card(table_.diamonds.back().getSuit(), table_.diamonds.back().getRank()));
+		allValidPlays.push_back(Card(table_.diamonds.front().getSuit(), table_.diamonds.front().getRank()));
 	}
 	else 
-		validPlays.push_back(new Card(DIAMOND, SEVEN));
+		allValidPlays.push_back(Card(DIAMOND, SEVEN));
 
-	if (!table_->spades->empty()) {
-		if (table_->spades->size() > 1)
-			validPlays.push_back(new Card(table_->spades->back()->getSuit(), table_->spades->back()->getRank()));
-		validPlays.push_back(new Card(table_->spades->front()->getSuit(), table_->spades->front()->getRank()));
+	if (!table_.spades.empty()) {
+		allValidPlays.push_back(Card(table_.spades.back().getSuit(), table_.spades.back().getRank()));
+		allValidPlays.push_back(Card(table_.spades.front().getSuit(), table_.spades.front().getRank()));
 	}
 
-	if (!table_->clubs->empty()) {
-		if (table_->clubs->size() > 1)
-			validPlays.push_back(new Card(table_->clubs->back()->getSuit(), table_->clubs->back()->getRank()));
-		validPlays.push_back(new Card(table_->clubs->front()->getSuit(), table_->clubs->front()->getRank()));
+	if (!table_.clubs.empty()) {
+		allValidPlays.push_back(Card(table_.clubs.back().getSuit(), table_.clubs.back().getRank()));
+		allValidPlays.push_back(Card(table_.clubs.front().getSuit(), table_.clubs.front().getRank()));
 	}
 	else
-		validPlays.push_back(new Card(CLUB, SEVEN));
+		allValidPlays.push_back(Card(CLUB, SEVEN));
 
-	vector<Card*> validHand;
+	vector<Card> validHand;
 
-	for (int i = 0; i < validPlays.size(); i++) {
+	for (int i = 0; i < allValidPlays.size(); i++) {
 		for (int j = 0; j < hand.size(); j++) {
-			if (*validPlays[i] == *hand[j])
-				validHand.push_back(new Card(validPlays[i]->getSuit(), validPlays[i]->getRank()));
+			if (allValidPlays[i] == hand[j])
+				validHand.push_back(Card(allValidPlays[i].getSuit(), allValidPlays[i].getRank()));
 		}
 	}
 
 	return validHand;
+}
+
+void Game::printTable() const {
+	cout << "Cards on the table:" << endl;
+	
+	cout << "Clubs:";
+	for (deque<Card>::const_iterator it = table_.clubs.begin(); it != table_.clubs.end(); it++) {
+		cout << " " << *it;
+	}
+	cout << endl;
+	
+	cout << "Diamonds:";
+	for (deque<Card>::const_iterator it = table_.diamonds.begin(); it != table_.diamonds.end(); it++) {
+		cout << " " << *it;
+	}
+	cout << endl;
+	
+	cout << "Hearts:";
+	for (deque<Card>::const_iterator it = table_.hearts.begin(); it != table_.hearts.end(); it++) {
+		cout << " " << *it;
+	}
+	cout << endl;
+
+	cout << "Spades:";
+	for (deque<Card>::const_iterator it = table_.spades.begin(); it != table_.spades.end(); it++) {
+		cout << " " << *it;
+	}
+	cout << endl;
+}
+
+void Game::putOnTable(Card card) {
+	if(card.getSuit() == CLUB) {
+		if (table_.clubs.size() == 0) {
+			table_.clubs.push_front(card);
+		}
+		else if (table_.clubs.size() == 1) {
+			if (card.getRank() > 6) 
+				table_.clubs.push_back(card);
+			else
+				table_.clubs.push_front(card);
+		}
+		else {
+			if (card.getRank() > table_.clubs.back().getRank())
+				table_.clubs.push_back(card);
+			else
+				table_.clubs.push_front(card);
+		}
+	}
+	else if (card.getSuit() == DIAMOND) {
+		if (table_.diamonds.size() == 0) {
+			table_.diamonds.push_front(card);
+		}
+		else if (table_.diamonds.size() == 1) {
+			if (card.getRank() > 6) 
+				table_.diamonds.push_back(card);
+			else
+				table_.diamonds.push_front(card);
+		}
+		else {
+			if (card.getRank() > table_.diamonds.back().getRank())
+				table_.diamonds.push_back(card);
+			else
+				table_.diamonds.push_front(card);
+		}
+	}
+	else if (card.getSuit() == HEART) {
+		if (table_.hearts.size() == 0) {
+			table_.hearts.push_front(card);
+		}
+		else if (table_.hearts.size() == 1) {
+			if (card.getRank() > 6) 
+				table_.hearts.push_back(card);
+			else
+				table_.hearts.push_front(card);
+		}
+		else {
+			if (card.getRank() > table_.hearts.back().getRank())
+				table_.hearts.push_back(card);
+			else
+				table_.hearts.push_front(card);
+		}
+	}
+	else if (card.getSuit() == SPADE) {
+		if (table_.spades.size() == 0) {
+			table_.spades.push_front(card);
+		}
+		else if (table_.spades.size() == 1) {
+			if (card.getRank() > 6) 
+				table_.spades.push_back(card);
+			else
+				table_.spades.push_front(card);
+		}
+		else {
+			if (card.getRank() > table_.spades.back().getRank())
+				table_.spades.push_back(card);
+			else
+				table_.spades.push_front(card);
+		}
+	}
 }
 
 // Non-member functions

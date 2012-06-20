@@ -9,7 +9,7 @@ public:
 	ComputerPlayer();
 	~ComputerPlayer();
 	void play(Command);
-	Command getCommand(std::vector<Card*>&) const;	
+	Command getCommand(std::vector<Card>&) const;	
 };
 
 #endif

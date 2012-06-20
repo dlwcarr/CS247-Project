@@ -7,23 +7,25 @@ ComputerPlayer::ComputerPlayer() : Player::Player() {}
 
 ComputerPlayer::~ComputerPlayer() {}
 
-Command ComputerPlayer::getCommand(vector<Card*>& cards) const {
+Command ComputerPlayer::getCommand(vector<Card>& cards) const {
 
-	command = Command();
+	Command command;
 
 	if (cards.size()) {
-		Command.card = Card(cards[0]->getSuit(), cards[0]->getRank());
-		Command.type = PLAY;
+		command.card = Card(cards[0].getSuit(), cards[0].getRank());
+		command.type = PLAY;
 	} else {
-		Command.card = getFirstCard();
-		Command.type = discard;
+		command.card = getFirstCard();
+		command.type = DISCARD;
 	}
+
+	return command;
 
 }
 
-void ComputerPlayer::play(Command) {
-	card = getFirstCard();
-	if( Command.type == PLAY ) {
+void ComputerPlayer::play(Command cmd) {
+	Card card = getFirstCard();
+	if( cmd.type == PLAY ) {
 		removeHand(card);
 	} else {
 		discard(card);

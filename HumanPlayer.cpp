@@ -7,9 +7,9 @@ HumanPlayer::HumanPlayer() : Player::Player() {}
 
 HumanPlayer::~HumanPlayer() {}
 
-Command HumanPlayer::getCommand(vector<Card*>& legalPlays) const {
+Command HumanPlayer::getCommand(vector<Card>& legalPlays) const {
 	// Output player's hand
-	vector<Card*> hand = getHand();
+	vector<Card> hand = getHand();
 	cout << "Your hand:";
 	for (int i = 0; i < hand.size(); i++)
 		cout << " " << hand[i];
@@ -29,8 +29,8 @@ Command HumanPlayer::getCommand(vector<Card*>& legalPlays) const {
 
 		// Ensure play is legal
 		if (cmd.type == PLAY) {
-			for (int i = 0; i < legalPlays->size(); i++) {
-				if (cmd.card == *legalPlays[i])
+			for (int i = 0; i < legalPlays.size(); i++) {
+				if (cmd.card == legalPlays[i])
 					return cmd;
 			}
 		}
