@@ -73,5 +73,4 @@ string cardToString(Card c) {
 }
 
 static string SUITS = {"C", "D", "H", "S"};
-static string RANKS = {"A", "2", "3", "4", "5", "6",
-		"7", "8", "9", "10", "J", "Q", "K"};
+static string RANKS = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
