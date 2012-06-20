@@ -1,3 +1,6 @@
+#ifndef _PLAYER_
+#define _PLAYER_
+
 #include <vector>
 #include <map>
 #include "Command.h"
@@ -27,5 +30,7 @@ private:
 	std::map<std::string, Card*> *hand_;
 	std::vector<Card*> *discards_;
 	int score_;
-	
+
 }
+
+#endif

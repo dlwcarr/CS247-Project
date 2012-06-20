@@ -1,3 +1,6 @@
+#ifndef _GAME_
+#define _GAME_
+
 #include <vector>
 #include <deque>
 #include "Card.h"
@@ -26,3 +29,5 @@ private:
 	std::vector<Card*> *deck_;		// Deck of cards
 	Table *table_;					// Cards that have been played
 }
+
+#endif

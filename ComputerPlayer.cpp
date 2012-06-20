@@ -7,8 +7,8 @@ ComputerPlayer::ComputerPlayer() : Player::Player() {}
 
 ComputerPlayer::~ComputerPlayer() {}
 
-Command ComputerPlayer::getCommand(vector<Card*>& cards) {
-	
+Command ComputerPlayer::getCommand(vector<Card*>& cards) const {
+
 	command = Command();
 
 	if (cards.size()) {
