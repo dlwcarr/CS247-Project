@@ -15,7 +15,7 @@ Command HumanPlayer::getCommand(vector<Card>& legalPlays) const {
 		cout << " " << hand[i];
 
 	// Output legal plays available to player
-	cout << endl << "Legal Plays:"; // TODO capital P
+	cout << endl << "Legal plays:"; 
 	for (int i = 0; i < legalPlays.size(); i++)
 		cout << " " << legalPlays[i];
 	cout << endl;
