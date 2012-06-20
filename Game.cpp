@@ -22,7 +22,7 @@ Game::Game() {
 		cout << "Is player " << i << " a human(h) or a computer(c)?" << endl << ">";
 		cin >> input;
 		assert(input == "h" || input == "H" || input == "c" || input == "C");
-		
+
 		if (input == "h" || input == "H") {
 			players_.push_back(new HumanPlayer());
 			human[i-1] = true;
@@ -50,10 +50,10 @@ void Game::start() {
 
 		// Shuffle deck between rounds
 		shuffleDeck();
-		
+
 		// Give each player a reference to the deck for DECK command
 		for (int i = 0; i < 4; i++) {
-			players_[i]->deck = &deck_; 
+			players_[i]->deck = &deck_;
 		}
 
 		// Distribute cards
@@ -71,7 +71,7 @@ void Game::start() {
 		// Take turns
 		// First player first turn
 		bool firstTurn = true;
-		
+
 		while(true) {
 			// On the first turn, 7S is the only valid play
 			vector<Card> validPlays;
@@ -99,7 +99,7 @@ void Game::start() {
 					players_[startingPlayer]->insertHand(curHand[c]);
 
 			}
-			else { 
+			else {
 				// First move can't be a DISCARD, so it must be a PLAY
 				cout << "Player " << (startingPlayer + 1) << " plays " << cmd.card << "." << endl;
 
@@ -126,7 +126,7 @@ void Game::start() {
 				}
 
 				// Determine which turn it is
-				int index = (startingPlayer + i) % 4; 
+				int index = (startingPlayer + i) % 4;
 
 				Player* curPlayer = players_[index];
 
@@ -155,7 +155,7 @@ void Game::start() {
 					players_[index] = new ComputerPlayer();
 
 					// Transfer old player's state to new player
-					for (int c = 0; c < curHand.size(); c++) 
+					for (int c = 0; c < curHand.size(); c++)
 						players_[index]->insertHand(curHand[c]);
 
 					for (int c = 0; c < curDiscards.size(); c++)
@@ -173,8 +173,8 @@ void Game::start() {
 						// Put card on table
 						putOnTable(cmd.card);
 					}
-					else if (cmd.type == DISCARD) 
-						cout << "Player " << (index + 1) << " discards " << cmd.card << "." << endl;	
+					else if (cmd.type == DISCARD)
+						cout << "Player " << (index + 1) << " discards " << cmd.card << "." << endl;
 
 					// Execute Command cmd
 					curPlayer->play(cmd);
@@ -243,7 +243,7 @@ void Game::buildDeck() { // Create a new ordered deck from scratch
 vector<Card> Game::validPlays(const vector<Card>& hand) const { // Find valid plays in hand
 
 	vector<Card> allValidPlays;
-	
+
 	if (!table_.hearts.empty()) {
 		// Check both ends of the table
 		if (table_.hearts.back().getRank() < 12)
@@ -252,7 +252,7 @@ vector<Card> Game::validPlays(const vector<Card>& hand) const { // Find valid pl
 			allValidPlays.push_back(Card(HEART, Rank(table_.hearts.front().getRank() - 1)));
 	}
 	// Sevens are always valid
-	else 
+	else
 		allValidPlays.push_back(Card(HEART, SEVEN));
 
 	if (!table_.diamonds.empty()) {
@@ -263,7 +263,7 @@ vector<Card> Game::validPlays(const vector<Card>& hand) const { // Find valid pl
 			allValidPlays.push_back(Card(DIAMOND, Rank(table_.diamonds.front().getRank() - 1)));
 	}
 	// Sevens are always valid
-	else 
+	else
 		allValidPlays.push_back(Card(DIAMOND, SEVEN));
 
 	if (!table_.spades.empty()) {
@@ -301,25 +301,70 @@ vector<Card> Game::validPlays(const vector<Card>& hand) const { // Find valid pl
 
 void Game::printTable() const {
 	cout << "Cards on the table:" << endl;
-	
+
 	cout << "Clubs:";
 	for (deque<Card>::const_iterator it = table_.clubs.begin(); it != table_.clubs.end(); it++)
-		cout << " " << (it->getRank() + 1);
+        int rank = it->getRank() + 1;
+        if ( rank == 11) {
+            cout << " " << "J";
+        } else if ( rank == 12) {
+            cout << " " << "Q";
+        }
+        else if ( rank == 13) {
+            cout << " " << "K";
+        }
+        else {
+            cout << " " << (it->getRank() + 1);
+        }
+
 	cout << endl;
-	
+
 	cout << "Diamonds:";
 	for (deque<Card>::const_iterator it = table_.diamonds.begin(); it != table_.diamonds.end(); it++)
-		cout << " " << (it->getRank() + 1);
+		int rank = it->getRank() + 1;
+        if ( rank == 11) {
+            cout << " " << "J";
+        } else if ( rank == 12) {
+            cout << " " << "Q";
+        }
+        else if ( rank == 13) {
+            cout << " " << "K";
+        }
+        else {
+            cout << " " << (it->getRank() + 1);
+        }
 	cout << endl;
-	
+
 	cout << "Hearts:";
 	for (deque<Card>::const_iterator it = table_.hearts.begin(); it != table_.hearts.end(); it++)
-		cout << " " << (it->getRank() + 1);
+		int rank = it->getRank() + 1;
+        if ( rank == 11) {
+            cout << " " << "J";
+        } else if ( rank == 12) {
+            cout << " " << "Q";
+        }
+        else if ( rank == 13) {
+            cout << " " << "K";
+        }
+        else {
+            cout << " " << (it->getRank() + 1);
+        }
 	cout << endl;
 
 	cout << "Spades:";
 	for (deque<Card>::const_iterator it = table_.spades.begin(); it != table_.spades.end(); it++)
-		cout << " " << (it->getRank() + 1);
+		int rank = it->getRank() + 1;
+        if ( rank == 11) {
+            cout << " " << "J";
+        } else if ( rank == 12) {
+            cout << " " << "Q";
+        }
+        else if ( rank == 13) {
+            cout << " " << "K";
+        }
+        else {
+            cout << " " << (it->getRank() + 1);
+        }
 	cout << endl;
 }
 
@@ -328,7 +373,7 @@ void Game::putOnTable(Card card) {
 	if(card.getSuit() == CLUB) {
 
 		// If empty, doesn't matter where it goes
-		if (table_.clubs.size() == 0) 
+		if (table_.clubs.size() == 0)
 			table_.clubs.push_front(card);
 
 		// Find which side to push card on
@@ -340,7 +385,7 @@ void Game::putOnTable(Card card) {
 		}
 	}
 	else if (card.getSuit() == DIAMOND) {
-		if (table_.diamonds.size() == 0) 
+		if (table_.diamonds.size() == 0)
 			table_.diamonds.push_front(card);
 
 		else {
@@ -351,7 +396,7 @@ void Game::putOnTable(Card card) {
 		}
 	}
 	else if (card.getSuit() == HEART) {
-		if (table_.hearts.size() == 0) 
+		if (table_.hearts.size() == 0)
 			table_.hearts.push_front(card);
 
 		else {
@@ -362,7 +407,7 @@ void Game::putOnTable(Card card) {
 		}
 	}
 	else if (card.getSuit() == SPADE) {
-		if (table_.spades.size() == 0) 
+		if (table_.spades.size() == 0)
 			table_.spades.push_front(card);
 
 		else {
