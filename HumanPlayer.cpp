@@ -37,7 +37,12 @@ Command HumanPlayer::getCommand(vector<Card>& legalPlays) const {
 		else if(cmd.type == DECK) {
 			printDeck();
 		}
-		else 
+		else if(cmd.type == DISCARD) {
+            if(legalPlays.size()) {
+                cout << "You have a legal play. You may not discard." << endl;
+            }else
+                return cmd;
+		}else
 			return cmd;
  		if(cmd.type != DECK)
  			cout << "This is not a legal play." << endl;
