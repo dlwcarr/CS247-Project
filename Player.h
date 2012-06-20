@@ -17,6 +17,7 @@ public:
 	int getScore() const;
 	Card getFirstCard() const;
 	std::vector<Card*>& getHand() const;
+	void printDiscards() const;
 private:
 	std::map<std::string, Card*> *hand_;
 	std::vector<Card*> *discards_;

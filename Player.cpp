@@ -19,9 +19,9 @@ Player::~Player() {
 }
 
 void Player::discard(Card& card) {
-	if (hand_.find(cardToString(card)) != map::end) {					// ensure card is in hand_
-		hand_.erase(hand_.find(cardToString(card)));					// Remove card from hand_
-		discards_.push_back(new Card(card.getSuit(), card.getRank()));	// Add card to discards_
+	if (hand_->find(cardToString(card)) != map::end) {					// ensure card is in hand_
+		hand_->erase(hand_->find(cardToString(card)));					// Remove card from hand_
+		discards_->push_back(new Card(card.getSuit(), card.getRank()));	// Add card to discards_
 	}
 }
 
@@ -45,8 +45,11 @@ void Player::removeHand(Card& card) {
 }
 
 void Player::tallyScore() {
+	int oldScore = score_;
 	for (int i = 0; i < discards_->size(); i++) 
 		score_ += (discards_[i]->getRank() + 1);
+
+	cout << " " << oldScore << " + " << (score_ - oldScore) << " = " << score_ << endl;
 	discards_->clear();
 }
 
@@ -64,6 +67,12 @@ vector<Card*>& Player::getHand() const {
 	for (map<string, Card*>::iterator it = hand_.begin(); it != hand_.end(); it++)
 		c.push_back(new Card(it->getSuit(), it->getRank()));
 	return c;
+}
+
+void Player::printDiscards() const {
+	for (int i = 0; i < discards_.size(); i++) 
+		cout << " " << *discards_[i];
+	cout << endl;
 }
 
 // Non-member functions
