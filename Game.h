@@ -28,6 +28,6 @@ private:
 	std::vector<Player*> *players_;	// Players
 	std::vector<Card*> *deck_;		// Deck of cards
 	Table *table_;					// Cards that have been played
-}
+};
 
 #endif

@@ -12,7 +12,7 @@ public:
 	Command getCommand(std::vector<Card*>&) const;
 	void play(Command);
 private:
-
-}
+	
+};
 
 #endif
