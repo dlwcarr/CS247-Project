@@ -26,6 +26,5 @@ private:
 	void printDeck();
 	std::map<std::string, Card*> *hand_;
 	std::vector<Card*> *discards_;
-	int score_;
-	
-}
+	int score_;	
+};

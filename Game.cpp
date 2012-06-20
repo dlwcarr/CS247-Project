@@ -24,7 +24,7 @@ Game::Game() {
 		cout << "Is player " << i << " a human(h) or computer(c)?" << endl << ">";
 		cin >> input;
 		cout << endl;
-		assert(input.c_str() == 'h' || input.c_str() == 'H' || input.c_str() == 'c' || input.c_str() == 'C');
+		assert(input.c_str() == "h" || input.c_str() == "H" || input.c_str() == "c" || input.c_str() == "C");
 		
 		if (input.c_str() == 'h' || input.c_str() == 'H')
 			players_[i-1] = new HumanPlayer();

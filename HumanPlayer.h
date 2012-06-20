@@ -10,4 +10,4 @@ public:
 	void play(Command);
 private:
 	
-}
+};
