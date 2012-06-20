@@ -1,4 +1,5 @@
 #include <vector>
+#include <map>
 #include "Command.h"
 #include "Card.h"
 
@@ -6,15 +7,18 @@ class Player {
 public:
 	Player();
 	~Player();
-	virtual void play(Command) = 0;
 	virtual Command getCommand(std::vector<Card*>&) const = 0;
+	virtual void play(Command) = 0;
 	void discard(Card&);
 	void insertHand(Card&);
 	void updateHand(std::vector<Card*>&);
+	void removeHand(Card&);
 	void tallyScore();
 	int getScore() const;
+	Card getFirstCard() const;
+	std::vector<Card*>& getHand() const;
 private:
-	std::vector<Card*> *hand_;
+	std::map<std::string, Card*> *hand_;
 	std::vector<Card*> *discards_;
 	int score_;
 protected:

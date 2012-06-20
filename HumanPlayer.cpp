@@ -11,10 +11,16 @@ HumanPlayer::~HumanPlayer() {
 
 }
 
-void HumanPlayer::play(Command c) {
-
+Command HumanPlayer::getCommand(vector<Card*>& legalPlays) const {
+	cout << "Legal plays:";
+	for (int i = 0; i < legalPlays.size(); i++) {
+		cout << legalPlays[i];
+		if (i != legalPlays.size() - 1)
+			cout << " ";
+	}
+	cout << endl;
 }
 
-Command HumanPlayer::getCommand() const {
-	
+void HumanPlayer::play(Command c) {
+
 }

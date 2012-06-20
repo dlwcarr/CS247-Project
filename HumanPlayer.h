@@ -6,8 +6,8 @@ class HumanPlayer : public Player {
 public:
 	HumanPlayer();
 	~HumanPlayer();
+	Command getCommand(std::vector<Card*>&) const;
 	void play(Command);
-	Command getCommand() const;
 private:
 	
 }
