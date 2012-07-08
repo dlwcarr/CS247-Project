@@ -90,7 +90,24 @@ StraightsWindow::StraightsWindow(){
 		
 	const Glib::RefPtr<Gdk::Pixbuf> nullCardPixbuf = deck.getNullCardImage();	
 	// Sets the border width of the window.
-	set_border_width( 10 );
+	set_border_width( 50 );
+
+	add(mainVBox);
+	
+	mainVBox.add(topBarHBox);
+		topBarHBox.add(newGameButton);
+			newGameButton.set_title("Start new game with seed:");
+		topBarHBox.add(seedEntry);
+			seedEntry.set_text("0");
+		topBarHBox.add(endGameButton);
+			newGameButton.set_title("End current game.");
+	/*		
+	mainVBox.add(tableFrame);
+
+
+
+	// TABLE STUFF
+	
 		
 	// Set the look of the frame.
 	tableFrame.set_label( "Cards on the table:" );
@@ -101,7 +118,13 @@ StraightsWindow::StraightsWindow(){
 	add( tableFrame );
 	
 	// Add the horizontal box for laying out the images to the frame.
-	tableFrame.add(tableVbox);
+	tableFrame.add(tableVBox);
+
+	tableVBox.add(tableClubHBox);
+	tableVBox.add(tableClubHBox);
+	tableVBox.add(tableClubHBox);
+	tableVBox.add(tableClubHBox);
+
 	
 	// Initialize 4 empty cards and place them in the box.
 	for (int i = 0; i < 4; i++ ) {
@@ -115,11 +138,15 @@ StraightsWindow::StraightsWindow(){
 			
 	// Add the button to the box.
 	hbox.add( button );
+	*/
 	
 	// The final step is to display this newly created widget.
 	show_all();
 } // OtherWorld::OtherWorld
 
+
+/*
 OtherWorld::~OtherWorld() {
 	for (int i = 0; i < 5; i++ ) delete card[i];
 } // OtherWorld::~OtherWorld()
+*/
