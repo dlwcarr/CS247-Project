@@ -97,23 +97,23 @@ StraightsWindow::StraightsWindow(){
 			// One row for each suit
 			tableVBox.add(tableClubHBox); // Clubs
 				for (int i = 0; i < 13; i++ ) {
-					card[i] = new Gtk::Image( nullCardPixbuf );
-					tableClubHBox.add( *card[i] );
+					tableCards[i] = new Gtk::Image( nullCardPixbuf );
+					tableClubHBox.add( *tableCards[i] );
 				}
 			tableVBox.add(tableDiamondHBox); // Diamonds
-				for (int i = 0; i < 4; i++ ) {
-					card[i] = new Gtk::Image( nullCardPixbuf );
-					tableDiamondHBox.add( *card[i] );
+				for (int i = 13; i < 26; i++ ) {
+					tableCards[i] = new Gtk::Image( nullCardPixbuf );
+					tableDiamondHBox.add( *tableCards[i] );
 				}
 			tableVBox.add(tableHeartHBox); // Hearts
-				for (int i = 0; i < 4; i++ ) {
-					card[i] = new Gtk::Image( nullCardPixbuf );
-					tableHeartHBox.add( *card[i] );
+				for (int i = 26; i < 39; i++ ) {
+					tableCards[i] = new Gtk::Image( nullCardPixbuf );
+					tableHeartHBox.add( *tableCards[i] );
 				}
 			tableVBox.add(tableSpadeHBox); // Spades
-				for (int i = 0; i < 4; i++ ) {
-					card[i] = new Gtk::Image( nullCardPixbuf );
-					tableSpadeHBox.add( *card[i] );
+				for (int i = 39; i < 52; i++ ) {
+					tableCards[i] = new Gtk::Image( nullCardPixbuf );
+					tableSpadeHBox.add( *tableCards[i] );
 				}
 
 	// The final step is to display this newly created widget.
