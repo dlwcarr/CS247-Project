@@ -83,46 +83,39 @@ StraightsWindow::StraightsWindow(){
 		topBarHBox.add(seedEntry);
 			seedEntry.set_text("0");
 		topBarHBox.add(endGameButton);
-			newGameButton.set_label("End current game.");
-	/*		
-	mainVBox.add(tableFrame);
-
-
+			endGameButton.set_label("End current game.");
+	
 
 	// TABLE STUFF
+	mainVBox.add(tableFrame);	
+		// Set the look of the frame.
+		tableFrame.set_label( "Cards on the table:" );
+		tableFrame.set_label_align( Gtk::ALIGN_LEFT, Gtk::ALIGN_TOP );
+		tableFrame.set_shadow_type( Gtk::SHADOW_ETCHED_OUT );
 	
-		
-	// Set the look of the frame.
-	tableFrame.set_label( "Cards on the table:" );
-	tableFrame.set_label_align( Gtk::ALIGN_LEFT, Gtk::ALIGN_TOP );
-	tableFrame.set_shadow_type( Gtk::SHADOW_ETCHED_OUT );
-	
-	// Add the frame to the window. Windows can only hold one widget, same for frames.
-	add( tableFrame );
-	
-	// Add the horizontal box for laying out the images to the frame.
-	tableFrame.add(tableVBox);
+		tableFrame.add(tableVBox);
+			// One row for each suit
+			tableVBox.add(tableClubHBox); // Clubs
+				for (int i = 0; i < 13; i++ ) {
+					card[i] = new Gtk::Image( nullCardPixbuf );
+					tableClubHBox.add( *card[i] );
+				}
+			tableVBox.add(tableDiamondHBox); // Diamonds
+				for (int i = 0; i < 4; i++ ) {
+					card[i] = new Gtk::Image( nullCardPixbuf );
+					tableDiamondHBox.add( *card[i] );
+				}
+			tableVBox.add(tableHeartHBox); // Hearts
+				for (int i = 0; i < 4; i++ ) {
+					card[i] = new Gtk::Image( nullCardPixbuf );
+					tableHeartHBox.add( *card[i] );
+				}
+			tableVBox.add(tableSpadeHBox); // Spades
+				for (int i = 0; i < 4; i++ ) {
+					card[i] = new Gtk::Image( nullCardPixbuf );
+					tableSpadeHBox.add( *card[i] );
+				}
 
-	tableVBox.add(tableClubHBox);
-	tableVBox.add(tableClubHBox);
-	tableVBox.add(tableClubHBox);
-	tableVBox.add(tableClubHBox);
-
-	
-	// Initialize 4 empty cards and place them in the box.
-	for (int i = 0; i < 4; i++ ) {
-		card[i] = new Gtk::Image( nullCardPixbuf );
-		hbox.add( *card[i] );
-	} // for
-	
-	// Initialize the 5th card and place the image into the button.
-	card[4] = new Gtk::Image( cardPixbuf );	
-	button.set_image( *card[4] );	
-			
-	// Add the button to the box.
-	hbox.add( button );
-	*/
-	
 	// The final step is to display this newly created widget.
 	show_all();
 } // OtherWorld::OtherWorld
