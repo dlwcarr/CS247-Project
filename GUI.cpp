@@ -63,23 +63,6 @@ Glib::RefPtr<Gdk::Pixbuf> DeckGUI::getNullCardImage() {
 
 // ************** WINDOW SHTUFF **************** //
 
-
-StraightsWindow::StraightsWindow() : testButton("Test") {
-	set_border_width(10);
-
-	testButton.signal_clicked().connect(sigc::mem_fun(*this, &StraightsWindow::onButtonClicked));
-
-	add(testButton);
-
-	testButton.show();
-}
-
-StraightsWindow::~StraightsWindow() {}
-
-void StraightsWindow::onButtonClicked() {
-	cout << "Button clicked" << endl;
-}
-
 // Sets the horizontal box to have homogeneous spacing (all elements are of the same size), and to put 10 pixels
 // between each widget. Initializes the pixel buffer for the null place holder card, and the 10 of spades.
 // Puts a frame in the window, and lays out the widgets horizontally. Four widgets are images, the fifth is a button
@@ -119,6 +102,8 @@ StraightsWindow::StraightsWindow(){
 	// The final step is to display this newly created widget.
 	show_all();
 } // OtherWorld::OtherWorld
+
+StraightsWindow::~StraightsWindow() {}
 
 OtherWorld::~OtherWorld() {
 	for (int i = 0; i < 5; i++ ) delete card[i];

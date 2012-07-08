@@ -32,8 +32,16 @@ public:
 	virtual ~StraightsWindow();
 
 protected:
-	virtual void onButtonClicked();
-	Gtk::Button testButton;
+	Gtk::VBox mainVBox;
+
+	Gtk::HBox topBarHBox;
+
+	Gtk::Frame tableFrame;
+
+	Gtk::HBox tableClubHBox;
+	Gtk::HBox tableDiamondHBox;
+	Gtk::HBox tableHeartHBox;
+	Gtk::HBox tableSpadeHBox;
 
 private:
 };
