@@ -45,7 +45,7 @@ protected:
 
 
 	Gtk::Frame tableFrame;
-
+	Gtk::VBox tableVBox;
 	Gtk::HBox tableClubHBox;
 	Gtk::HBox tableDiamondHBox;
 	Gtk::HBox tableHeartHBox;
