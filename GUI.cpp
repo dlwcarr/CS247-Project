@@ -73,7 +73,7 @@ StraightsWindow::StraightsWindow(){
 		
 	const Glib::RefPtr<Gdk::Pixbuf> nullCardPixbuf = deck.getNullCardImage();	
 	// Sets the border width of the window.
-	set_border_width( 50 );
+	set_border_width( 10 );
 
 	add(mainVBox);
 	
@@ -98,21 +98,25 @@ StraightsWindow::StraightsWindow(){
 			tableVBox.add(tableClubHBox); // Clubs
 				for (int i = 0; i < 13; i++ ) {
 					tableCards[i] = new Gtk::Image( nullCardPixbuf );
+					tableCards[i].set_border_width(1);
 					tableClubHBox.add( *tableCards[i] );
 				}
 			tableVBox.add(tableDiamondHBox); // Diamonds
 				for (int i = 13; i < 26; i++ ) {
 					tableCards[i] = new Gtk::Image( nullCardPixbuf );
+					tableCards[i].set_border_width(1);
 					tableDiamondHBox.add( *tableCards[i] );
 				}
 			tableVBox.add(tableHeartHBox); // Hearts
 				for (int i = 26; i < 39; i++ ) {
 					tableCards[i] = new Gtk::Image( nullCardPixbuf );
+					tableCards[i].set_border_width(1);
 					tableHeartHBox.add( *tableCards[i] );
 				}
 			tableVBox.add(tableSpadeHBox); // Spades
 				for (int i = 39; i < 52; i++ ) {
 					tableCards[i] = new Gtk::Image( nullCardPixbuf );
+					tableCards[i].set_border_width(1);
 					tableSpadeHBox.add( *tableCards[i] );
 				}
 
