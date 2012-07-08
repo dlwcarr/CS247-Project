@@ -79,11 +79,11 @@ StraightsWindow::StraightsWindow(){
 	
 	mainVBox.add(topBarHBox);
 		topBarHBox.add(newGameButton);
-			newGameButton.set_title("Start new game with seed:");
+			newGameButton.set_label("Start new game with seed:");
 		topBarHBox.add(seedEntry);
 			seedEntry.set_text("0");
 		topBarHBox.add(endGameButton);
-			newGameButton.set_title("End current game.");
+			newGameButton.set_label("End current game.");
 	/*		
 	mainVBox.add(tableFrame);
 
@@ -126,6 +126,8 @@ StraightsWindow::StraightsWindow(){
 	// The final step is to display this newly created widget.
 	show_all();
 } // OtherWorld::OtherWorld
+
+StraightsWindow::~StraightsWindow() {}
 
 /*
 OtherWorld::~OtherWorld() {

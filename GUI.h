@@ -4,6 +4,10 @@
 #include <gtkmm/window.h>
 #include <gtkmm/button.h>
 #include <gdkmm/pixbuf.h>
+#include <gtkmm/box.h>
+#include <gtkmm/frame.h>
+#include <gtkmm/image.h>
+#include <gtkmm/entry.h>
 #include <vector>
 #include "Card.h"
 using std::vector;
@@ -48,6 +52,7 @@ protected:
 	Gtk::HBox tableSpadeHBox;
 
 private:
+	DeckGUI deck;
 };
 
 
