@@ -50,7 +50,7 @@ protected:
 	Gtk::HBox tableDiamondHBox;
 	Gtk::HBox tableHeartHBox;
 	Gtk::HBox tableSpadeHBox;
-	Gtk::Image* tablecards[52]; // Images for the Table
+	Gtk::Image* tableCards[52]; // Images for the Table
 
 private:
 	DeckGUI deck;
