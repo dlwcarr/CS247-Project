@@ -35,6 +35,10 @@ protected:
 	Gtk::VBox mainVBox;
 
 	Gtk::HBox topBarHBox;
+	Gtk::Button newGameButton;
+	Gtk::Entry seedEntry;
+	Gtk::Button endGameButton;
+
 
 	Gtk::Frame tableFrame;
 
