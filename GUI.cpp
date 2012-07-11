@@ -149,7 +149,7 @@ tableSpadeHBox(true, 5), playersHBox(true, 1) {
 				p3VBox.add(p3ActionButton);
 					p3ActionButton.set_label("Human");
 				p3VBox.add(p3PointsLbl);
-					p1PointsLbl.set_text("0 points");
+					p3PointsLbl.set_text("0 points");
 				p3VBox.add(p3DiscardsLbl);
 					p3DiscardsLbl.set_text("0 discards");
 
