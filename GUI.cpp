@@ -69,7 +69,9 @@ Glib::RefPtr<Gdk::Pixbuf> DeckGUI::getNullCardImage() {
 // with an image in it.
 //
 // Since widgets cannot be shared, must use pixel buffers to share images.
-StraightsWindow::StraightsWindow() : mainVBox(false, 0), tableVBox(true, 5), tableClubHBox(true, 5), tableDiamondHBox(true, 5), tableHeartHBox(true, 5), tableSpadeHBox(true, 5) { 
+StraightsWindow::StraightsWindow() : mainVBox(false, 0), tableVBox(true, 5), 
+tableClubHBox(true, 5), tableDiamondHBox(true, 5), tableHeartHBox(true, 5), 
+tableSpadeHBox(true, 5), playersHBox(true, 1) { 
 		
 	const Glib::RefPtr<Gdk::Pixbuf> nullCardPixbuf = deck.getNullCardImage();	
 	// Sets the border width of the window.
@@ -119,6 +121,48 @@ StraightsWindow::StraightsWindow() : mainVBox(false, 0), tableVBox(true, 5), tab
 					//tableCards[i]->set_border_width(1);
 					tableSpadeHBox.add( *tableCards[i] );
 				}
+
+	mainVBox.add(playersHBox);
+		playersHBox.add(p1Frame);
+			p1Frame.set_label("Player 1");
+			p1Frame.add(p1VBox);
+				p1VBox.add(p1ActionButton);
+					p1ActionButton.set_label("Human");
+				p1VBox.add(p1PointsLbl);
+					p1PointsLbl.set_text("0 points");
+				p1VBox.add(p1DiscardsLbl);
+					p1DiscardsLbl.set_text("0 discards");
+
+		playersHBox.add(p2Frame);
+			p2Frame.set_label("Player 2");
+			p2Frame.add(p2VBox);
+				p2VBox.add(p2ActionButton);
+					p2ActionButton.set_label("Human");
+				p2VBox.add(p2PointsLbl);
+					p2PointsLbl.set_text("0 points");
+				p2VBox.add(p2DiscardsLbl);
+					p2DiscardsLbl.set_text("0 discards");
+
+		playersHBox.add(p3Frame);
+			p3Frame.set_label("Player 3");
+			p3Frame.add(p3VBox);
+				p3VBox.add(p3ActionButton);
+					p3ActionButton.set_label("Human");
+				p3VBox.add(p3PointsLbl);
+					p1PointsLbl.set_text("0 points");
+				p3VBox.add(p3DiscardsLbl);
+					p3DiscardsLbl.set_text("0 discards");
+
+		playersHBox.add(p4Frame);
+			p4Frame.set_label("Player 4");
+			p4Frame.add(p4VBox);
+				p4VBox.add(p4ActionButton);
+					p4ActionButton.set_label("Human");
+				p4VBox.add(p4PointsLbl);
+					p4PointsLbl.set_text("0 points");
+				p4VBox.add(p4DiscardsLbl);
+					p4DiscardsLbl.set_text("0 discards");
+
 
 	// The final step is to display this newly created widget.
 	show_all();

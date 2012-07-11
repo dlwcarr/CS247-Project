@@ -52,6 +52,31 @@ protected:
 	Gtk::HBox tableSpadeHBox;
 	Gtk::Image* tableCards[52]; // Images for the Table
 
+
+	Gtk::HBox playersHBox;
+	Gtk::Frame p1Frame;
+	Gtk::Frame p2Frame;
+	Gtk::Frame p3Frame;
+	Gtk::Frame p4Frame;
+	Gtk::VBox p1VBox;
+	Gtk::VBox p2VBox;
+	Gtk::VBox p3VBox;
+	Gtk::VBox p4VBox;
+	Gtk::Button p1ActionButton;
+	Gtk::Button p2ActionButton;
+	Gtk::Button p3ActionButton;
+	Gtk::Button p4ActionButton;
+	Gtk::Label p1PointsLbl;
+	Gtk::Label p2PointsLbl;
+	Gtk::Label p3PointsLbl;
+	Gtk::Label p4PointsLbl;
+	Gtk::Label p1DiscardsLbl;
+	Gtk::Label p2DiscardsLbl;
+	Gtk::Label p3DiscardsLbl;
+	Gtk::Label p4DiscardsLbl;
+
+
+
 private:
 	DeckGUI deck;
 };
