@@ -168,7 +168,7 @@ tableSpadeHBox(true, 5), playersHBox(true, 1), handHBox(true, 5) {
 
 		for(int i = 0; i < 13; i ++) {
 			handHBox.add( *handCards[i] );
-				handCards[i].set_image(deck.getNullCardImage());
+				handCards[i]->set_image(deck.getNullCardImage());
 		}
 
 
