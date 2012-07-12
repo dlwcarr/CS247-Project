@@ -165,7 +165,7 @@ tableSpadeHBox(true, 5), playersHBox(true, 1), handHBox(true, 5) {
 	// Player Hand
 	mainVBox.add(handFrame);
 		handFrame.add(handHBox);
-
+		handFrame.set_label("Your hand:");
 		for(int i = 0; i < 13; i ++) {
 			handHBox.add( handCards[i] );
 				handImages[i] = new Gtk::Image( nullCardPixbuf );
