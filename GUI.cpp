@@ -93,7 +93,6 @@ tableSpadeHBox(true, 5), playersHBox(true, 1), handHBox(true, 5) {
 		// Set the look of the frame.
 		tableFrame.set_label( "Cards on the table:" );
 		tableFrame.set_label_align( Gtk::ALIGN_LEFT, Gtk::ALIGN_TOP );
-		tableFrame.set_shadow_type( Gtk::SHADOW_ETCHED_OUT );
 	
 		tableFrame.add(tableVBox);
 			// One row for each suit
