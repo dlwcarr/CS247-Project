@@ -81,7 +81,7 @@ protected:
 	Gtk::Frame handFrame;
 	Gtk::HBox handHBox;
 	Gtk::Image* handImages[13]; // Images for the buttons for the hand
-	Gtk::Button* handCards[13]; // Buttons for the hand
+	Gtk::Button handCards[13]; // Buttons for the hand
 
 
 
