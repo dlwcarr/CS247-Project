@@ -71,7 +71,7 @@ Glib::RefPtr<Gdk::Pixbuf> DeckGUI::getNullCardImage() {
 // Since widgets cannot be shared, must use pixel buffers to share images.
 StraightsWindow::StraightsWindow() : mainVBox(false, 0), tableVBox(true, 5), 
 tableClubHBox(true, 5), tableDiamondHBox(true, 5), tableHeartHBox(true, 5), 
-tableSpadeHBox(true, 5), playersHBox(true, 1) { 
+tableSpadeHBox(true, 5), playersHBox(true, 1), handHBox(true, 5) { 
 		
 	const Glib::RefPtr<Gdk::Pixbuf> nullCardPixbuf = deck.getNullCardImage();	
 	// Sets the border width of the window.
@@ -100,28 +100,26 @@ tableSpadeHBox(true, 5), playersHBox(true, 1) {
 			tableVBox.add(tableClubHBox); // Clubs
 				for (int i = 0; i < 13; i++ ) {
 					tableCards[i] = new Gtk::Image( nullCardPixbuf );
-					//tableCards[i]->set_border_width(1);
 					tableClubHBox.add( *tableCards[i] );
 				}
 			tableVBox.add(tableDiamondHBox); // Diamonds
 				for (int i = 13; i < 26; i++ ) {
 					tableCards[i] = new Gtk::Image( nullCardPixbuf );
-					//tableCards[i]->set_border_width(1);
 					tableDiamondHBox.add( *tableCards[i] );
 				}
 			tableVBox.add(tableHeartHBox); // Hearts
 				for (int i = 26; i < 39; i++ ) {
 					tableCards[i] = new Gtk::Image( nullCardPixbuf );
-					//tableCards[i]->set_border_width(1);
 					tableHeartHBox.add( *tableCards[i] );
 				}
 			tableVBox.add(tableSpadeHBox); // Spades
 				for (int i = 39; i < 52; i++ ) {
 					tableCards[i] = new Gtk::Image( nullCardPixbuf );
-					//tableCards[i]->set_border_width(1);
 					tableSpadeHBox.add( *tableCards[i] );
 				}
 
+
+	// Players HBox
 	mainVBox.add(playersHBox);
 		playersHBox.add(p1Frame);
 			p1Frame.set_label("Player 1");
@@ -162,6 +160,16 @@ tableSpadeHBox(true, 5), playersHBox(true, 1) {
 					p4PointsLbl.set_text("0 points");
 				p4VBox.add(p4DiscardsLbl);
 					p4DiscardsLbl.set_text("0 discards");
+
+
+	// Player Hand
+	mainVBox.add(handFrame);
+		handFrame.add(handHBox);
+
+		for(int i = 0; i < 13; i ++) {
+			handHBox.add( *handCards[i] );
+				handCards[i].set_image(deck.getNullCardImage());
+		}
 
 
 	// The final step is to display this newly created widget.

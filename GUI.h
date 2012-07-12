@@ -8,6 +8,7 @@
 #include <gtkmm/frame.h>
 #include <gtkmm/image.h>
 #include <gtkmm/entry.h>
+#include <gtkmm/label.h>
 #include <vector>
 #include "Card.h"
 using std::vector;
@@ -38,12 +39,13 @@ public:
 protected:
 	Gtk::VBox mainVBox;
 
+	// Top Bar
 	Gtk::HBox topBarHBox;
 	Gtk::Button newGameButton;
 	Gtk::Entry seedEntry;
 	Gtk::Button endGameButton;
 
-
+	// Table
 	Gtk::Frame tableFrame;
 	Gtk::VBox tableVBox;
 	Gtk::HBox tableClubHBox;
@@ -52,7 +54,7 @@ protected:
 	Gtk::HBox tableSpadeHBox;
 	Gtk::Image* tableCards[52]; // Images for the Table
 
-
+	// Players
 	Gtk::HBox playersHBox;
 	Gtk::Frame p1Frame;
 	Gtk::Frame p2Frame;
@@ -74,6 +76,13 @@ protected:
 	Gtk::Label p2DiscardsLbl;
 	Gtk::Label p3DiscardsLbl;
 	Gtk::Label p4DiscardsLbl;
+
+	// Hand
+	Gtk::Frame handFrame;
+	Gtk::HBox handHBox;
+	Gtk::Button* handCards[13]; // Buttons for the hand
+
+
 
 
 
